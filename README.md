@@ -17,9 +17,6 @@ If any face appear in a photo then program blur it and overwritews a file.
 
 Program search only for last new file because 10 seconds is an optimal time for camera to took a photo, there is no need to search all the files repeatedly.
 
-Program once executed can run all the time.
-
-
 
 
 
