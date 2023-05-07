@@ -19,7 +19,6 @@ class Directory:
         self.id = ["013-420", "013-421", "013-422"]
 
         try:
-        
             self.dir_path = "/home/skbb/Pictures/%s/%s/%s/%s" % (self.year, self.month, self.day, self.id[2])
             os.path.exists(self.dir_path)
             self.go_to_dir = os.chdir(self.dir_path)
@@ -52,7 +51,6 @@ class Directory:
         if self.item != string:
            self.detection = Detect()
            self.scanning = self.detection.detection_rectangle(self.list_of_files[-1])
-
         else:
             logging.debug('There is no new file for detection')
         time.sleep(10)
