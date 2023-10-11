@@ -51,7 +51,7 @@ class Directory:
                             for item in self.list_of_files:
                                 detection = Detect()
                                 detection.detection_rectangle(os.path.join(self.dir_path, item))
-                                print("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
+                                print("ostatnia sciezka to %s zdjecie %s " % (self.dir_path, item))
                         except AttributeError:
                             logging.error("Directory is not yet created")
                             Directory.__init__(self)
@@ -64,10 +64,12 @@ class Directory:
                 current_day = datetime.datetime.now().day
                 current_month = datetime.datetime.now().month
                 if current_day != self.day:
+                    print("zmiana daty dnia")
                     self.day = current_day
                     self.day = "0{}".format(self.day) if self.day <= 9 else str(self.day)
                     self.process_directory()
                 if current_month != self.month:
+                    print("zmiana daty miesiaca")
                     self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
                 self.process_directory()
 
@@ -79,7 +81,7 @@ cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_
 
 class Detect:
     def __init__(self):
-        print("Detection begin")
+        time.sleep(3)
 
     def detection_rectangle(self, img):
         self.pic = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
