@@ -1,3 +1,5 @@
+import sys
+
 import cv2
 import os
 import datetime
@@ -12,52 +14,48 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s',
 class Directory:
     def __init__(self):
         self.today = datetime.datetime.now()
-        self.year = today.year
-        self.month = today.month
-        self.day = today.day
-        self.hour = today.hour
+        self.year = self.today.year
         self.id = ["013-420", "013-421", "013-422"]
-
+        self.month_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+                           "11", "12"]
+        self.day_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+                         "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
+                         "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
+                         "31"]
         try:
-            self.dir_path = "/home/skbb/Pictures/%s/%s/%s/%s" % (self.year, self.month, self.day, self.id[2])
-            os.path.exists(self.dir_path)
-            self.go_to_dir = os.chdir(self.dir_path)
-            self.files = os.listdir(self.dir_path)
-            os.path.exists(self.dir_path)
-            self.list_of_files = sorted(self.files, key=os.path.getctime)
-            # print(self.list_of_files)
+            while True:
+                for months in self.month_list:
+                    for days in self.day_list:
+                        for ids in self.id:
+                            self.dir_path = "/home/skbb/Pictures/%s/%s/%s/%s" % (self.year, months, days, ids)
+                            # self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, months, days, ids)
+                            exists = os.path.exists(self.dir_path)
+                            time.sleep(1)
+                            if not exists:
+                                continue
+                            else:
+                                print(self.dir_path)
+                                os.chdir(self.dir_path)
+                                self.files = os.listdir(self.dir_path)
+
+                                os.path.exists(self.dir_path)
+                                self.list_of_files = sorted(self.files, key=os.path.getctime)
+                                try:
+                                    for item in self.list_of_files:
+                                        detection = Detect()
+                                        detection.detection_rectangle(os.path.join(self.dir_path, item))
+                                        logging.debug("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
+                                except AttributeError:
+                                    logging.error("Directory is not yet created")
+                                    Directory.__init__(self)
         except OSError:
             logging.error("Directory is not yet created")
-
-        while True:
-            try:
-                self.item = self.list_of_files[-1]
-                assert self.item == self.list_of_files[-1]
-                self.scan = self.new_files_check()
-            except AttributeError:
-                logging.error("Directory is not yet created")
-                time.sleep(10)
-                Directory.__init__(self)
+            sys.exit()
 
 
-    def new_files_check(self):
-        # self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month, self.day, self.id[0])
-        self.dir_path = "/home/skbb/Pictures/%s/%s/%s/%s" % (self.year, self.month, self.day, self.id[2])
-        self.go_to_dir = os.chdir(self.dir_path)
-        self.files = os.listdir(self.dir_path)
-        self.list_of_files = sorted(self.files, key=os.path.getmtime)
-        # print(self.list_of_files)
-        string = str(self.list_of_files[-1])
-        if self.item != string:
-           self.detection = Detect()
-           self.scanning = self.detection.detection_rectangle(self.list_of_files[-1])
-        else:
-            logging.debug('There is no new file for detection')
-        time.sleep(10)
+# cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
 
-
-cascades = cv2.CascadeClassifier("/home/skbb/Downloads/test/haarcascade_frontalface_default.xml")
-# cascades = cv2.CascadeClassifier("/usr/src/faceblur/haarcascade_frontalface_default.xml")
+cascades = cv2.CascadeClassifier("/usr/src/faceblur/haarcascade_frontalface_default.xml")
 
 
 class Detect:
