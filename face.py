@@ -58,6 +58,7 @@ class Directory:
         except OSError:
             logging.error("Directory is not yet created")
             time.sleep(10)
+
     def update_date(self):
             while True:
                 current_day = datetime.datetime.now().day
@@ -68,6 +69,7 @@ class Directory:
                     self.process_directory()
                 if current_month != self.month:
                     self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
+                self.process_directory()
 
 
 # cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
