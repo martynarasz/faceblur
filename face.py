@@ -28,8 +28,11 @@ class Directory:
                          "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
                          "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
                          "31"]
+        self.update_date()
+    def process_directory(self):
         try:
             while True:
+
                 for ids in self.id:
                     self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
                                                                                               self.day, ids)
@@ -54,7 +57,17 @@ class Directory:
                             Directory.__init__(self)
         except OSError:
             logging.error("Directory is not yet created")
-            sys.exit()
+            time.sleep(10)
+    def update_date(self):
+            while True:
+                current_day = datetime.datetime.now().day
+                current_month = datetime.datetime.now().month
+                if current_day != self.day:
+                    self.day = current_day
+                    self.day = "0{}".format(self.day) if self.day <= 9 else str(self.day)
+                    self.process_directory()
+                if current_month != self.month:
+                    self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
 
 
 # cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
