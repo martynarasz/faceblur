@@ -32,12 +32,12 @@ class Directory:
     def process_directory(self):
         try:
             while True:
-
                 for ids in self.id:
                     self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
                                                                                               self.day, ids)
                     # self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, months, days, ids)
                     exists = os.path.exists(self.dir_path)
+                    print(self.dir_path)
                     time.sleep(1)
                     if not exists:
                         continue
@@ -51,12 +51,12 @@ class Directory:
                             for item in self.list_of_files:
                                 detection = Detect()
                                 detection.detection_rectangle(os.path.join(self.dir_path, item))
-                                logging.debug("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
+                                print("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
                         except AttributeError:
                             logging.error("Directory is not yet created")
                             Directory.__init__(self)
         except OSError:
-            logging.error("Directory is not yet created")
+            print("Directory is not yet created")
             time.sleep(10)
 
     def update_date(self):
@@ -79,7 +79,7 @@ cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_
 
 class Detect:
     def __init__(self):
-        logging.debug("Detection begin")
+        print("Detection begin")
 
     def detection_rectangle(self, img):
         self.pic = cv2.imread(img, cv2.IMREAD_GRAYSCALE)
