@@ -15,6 +15,12 @@ class Directory:
     def __init__(self):
         self.today = datetime.datetime.now()
         self.year = self.today.year
+        self.month = self.today.month
+        self.day = self.today.day
+        if self.month <= 9:
+            self.month = "0{}".format(self.month)
+        if self.day <= 9:
+            self.day = "0{}".format(self.day)
         self.id = ["013-420", "013-421", "013-422"]
         self.month_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                            "11", "12"]
@@ -24,30 +30,28 @@ class Directory:
                          "31"]
         try:
             while True:
-                for months in self.month_list:
-                    for days in self.day_list:
-                        for ids in self.id:
-                            self.dir_path = "/home/skbb/Pictures/%s/%s/%s/%s" % (self.year, months, days, ids)
-                            # self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, months, days, ids)
-                            exists = os.path.exists(self.dir_path)
-                            time.sleep(1)
-                            if not exists:
-                                continue
-                            else:
-                                print(self.dir_path)
-                                os.chdir(self.dir_path)
-                                self.files = os.listdir(self.dir_path)
-
-                                os.path.exists(self.dir_path)
-                                self.list_of_files = sorted(self.files, key=os.path.getctime)
-                                try:
-                                    for item in self.list_of_files:
-                                        detection = Detect()
-                                        detection.detection_rectangle(os.path.join(self.dir_path, item))
-                                        logging.debug("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
-                                except AttributeError:
-                                    logging.error("Directory is not yet created")
-                                    Directory.__init__(self)
+                for ids in self.id:
+                    self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
+                                                                                              self.day, ids)
+                    # self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, months, days, ids)
+                    exists = os.path.exists(self.dir_path)
+                    time.sleep(1)
+                    if not exists:
+                        continue
+                    else:
+                        print(self.dir_path)
+                        os.chdir(self.dir_path)
+                        self.files = os.listdir(self.dir_path)
+                        os.path.exists(self.dir_path)
+                        self.list_of_files = sorted(self.files, key=os.path.getctime)
+                        try:
+                            for item in self.list_of_files:
+                                detection = Detect()
+                                detection.detection_rectangle(os.path.join(self.dir_path, item))
+                                logging.debug("ostatnia sciezka to %s A ZDJECIE TO %s " % (self.dir_path, item))
+                        except AttributeError:
+                            logging.error("Directory is not yet created")
+                            Directory.__init__(self)
         except OSError:
             logging.error("Directory is not yet created")
             sys.exit()
@@ -55,7 +59,7 @@ class Directory:
 
 # cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
 
-cascades = cv2.CascadeClassifier("/usr/src/faceblur/haarcascade_frontalface_default.xml")
+cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
 
 
 class Detect:
