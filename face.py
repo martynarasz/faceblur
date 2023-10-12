@@ -33,9 +33,9 @@ class Directory:
             while True:
                 self.update_date()
                 for ids in self.id:
-                    #self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
-                      #                                                                        self.day, ids)
-                    self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, self.month, self.day, ids)
+                    self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
+                                                                                              self.day, ids)
+                    #self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, self.month, self.day, ids)
                     exists = os.path.exists(self.dir_path)
                     print(self.dir_path)
                     time.sleep(1)
@@ -76,9 +76,9 @@ class Directory:
 
 
 
-cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
+#cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
 
-#cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
+cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
 
 
 class Detect:
