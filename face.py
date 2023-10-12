@@ -27,14 +27,15 @@ class Directory:
                          "11", "12", "13", "14", "15", "16", "17", "18", "19", "20",
                          "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
                          "31"]
-        self.update_date()
+        self.process_directory()
     def process_directory(self):
         try:
             while True:
+                self.update_date()
                 for ids in self.id:
-                    self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
-                                                                                              self.day, ids)
-                    # self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, months, days, ids)
+                    #self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
+                      #                                                                        self.day, ids)
+                    self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, self.month, self.day, ids)
                     exists = os.path.exists(self.dir_path)
                     print(self.dir_path)
                     time.sleep(1)
@@ -59,23 +60,25 @@ class Directory:
             time.sleep(10)
 
     def update_date(self):
-            while True:
-                current_day = datetime.datetime.now().day
-                current_month = datetime.datetime.now().month
-                if current_day != self.day:
-                    print("zmiana daty dnia")
-                    self.day = current_day
-                    self.day = "0{}".format(self.day) if self.day <= 9 else str(self.day)
-                    self.process_directory()
-                if current_month != self.month:
-                    print("zmiana daty miesiaca")
-                    self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
-                self.process_directory()
+            today = datetime.datetime.now()
+            current_day = today.day
+            print(self.day, current_day)
+            time.sleep(1)
+            current_month = datetime.datetime.now().month
+            if current_day != self.day:
+                print("zmiana daty dnia")
+                self.day = current_day
+                self.day = "0{}".format(self.day) if self.day <= 9 else str(self.day)
+
+            if current_month != self.month:
+                print("zmiana daty miesiaca")
+                self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
 
 
-# cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
 
-cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
+cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
+
+#cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
 
 
 class Detect:
