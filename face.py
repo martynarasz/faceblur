@@ -20,7 +20,7 @@ class Directory:
             self.month = "0{}".format(self.month)
         if self.day <= 9:
             self.day = "0{}".format(self.day)
-        self.id = ["013-298", "013-300"]
+        self.id = ["000-001", "013-432", "013-434", "013-436"]
         self.month_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
                            "11", "12"]
         self.day_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
