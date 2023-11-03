@@ -72,6 +72,7 @@ class Directory:
             print("zmiana daty miesiaca")
             self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
 
+
 #  cascades = cv2.CascadeClassifier("C:\\Users\\Delta\\Downloads\\haarcascade_frontalface_default.xml")
 cascades = cv2.CascadeClassifier("/usr/src/faceblur-new/haarcascade_frontalface_default.xml")
 
@@ -98,4 +99,4 @@ class Detect:
 
 
 if __name__ == '__main__':
-  dr = Directory()
+    dr = Directory()
