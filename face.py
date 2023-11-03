@@ -34,7 +34,8 @@ class Directory:
             while True:
                 self.update_date()
                 for ids in self.id:
-                    self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,                                                                   self.day, ids)
+                    self.dir_path = "/var/dav/davserver/lpn_snapshots/%s/%s/%s/%s" % (self.year, self.month,
+                                                                                      self.day, ids)
                     #self.dir_path = "C:\\Users\\Delta\\%s\\%s\\%s\\%s" % (self.year, self.month, self.day, ids)
                     exists = os.path.exists(self.dir_path)
                     print(self.dir_path)
@@ -70,6 +71,7 @@ class Directory:
         current_month = today.month
         if current_month != self.month:
             print("zmiana daty miesiaca")
+            self.month = current_month
             self.month = "0{}".format(self.month) if self.month <= 9 else str(self.month)
 
 
